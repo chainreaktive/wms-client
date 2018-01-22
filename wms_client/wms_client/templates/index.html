@@ -1,0 +1,133 @@
+{% extends "base.html" %} {% block head %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.6/nv.d3.min.css"> {% endblock %} {% block main %}
+<div="container-fluid">
+  <div class="row">
+    <div class="col-sm-12 col-lg-4">
+      <div class="card mb-3">
+        <div class="card-header"><span class="fa fa-pie-chart" aria-hidden="true"></span> Current Shipments</div>
+        <div class="card-body">
+          <div id="chart">
+            <svg></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12 col-lg-8">
+      <div class="card mb-3">
+        <div class="card-header"><span class="fa fa-table" aria-hidden="true"></span> Outstanding Shipments</div>
+        <div class="card-body">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Shipment ID</th>
+                <th>Client ID</th>
+                <th>Carrier Code</th>
+                <th>Service Level</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for row in table_list %}
+              <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ row.ship_id }}</td>
+                <td>{{ row.client_id }}</td>
+                <td>{{ row.carcod }}</td>
+                <td>{{ row.srvlvl }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-12 col-lg-8">
+      <div class="card mb-3">
+        <div class="card-header"><span class="fa fa-bar-chart" aria-hidden="true"></span> User Productivity</div>
+        <div class="card-body">
+          <div id="bar-chart">
+            <svg></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12 col-lg-4" id="counts">
+      <div class="card mb-3">
+        <div class="card-header"><span class="fa fa-info" aria-hidden="true"></span> Short Allocations</div>
+        <div class="card-body">
+          <p>{{ shorts }}</p>
+        </div>
+      </div>
+      <div class="card mb-3">
+        <div class="card-header"><span class="fa fa-info" aria-hidden="true"></span> Remaining Picks</div>
+        <div class="card-body">
+          <p>{{ picks }}</p>
+        </div>
+      </div>
+      <div class="card mb-3">
+        <div class="card-header"><span class="fa fa-info" aria-hidden="true"></span> Today's Orders</div>
+        <div class="card-body">
+          <p>{{ orders }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br><br>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/nvd3/1.8.6/nv.d3.min.js" charset="utf-8"></script>
+</script>
+<script type="text/javascript">
+    nv.addGraph(function() {
+      var chart = nv.models.pieChart()
+        .x(function(d) {
+          return d.label
+        })
+        .y(function(d) {
+          return d.value
+        })
+        .showLabels(true).color([
+          "#29a329",
+          "#0033cc",
+          "#ffbb33",
+          "#ff2020",
+          "#98A886",
+          "#cc00cc",
+          "#ff8000"
+        ]).labelType("value").labelsOutside(true).donut(true).legendPosition("top").valueFormat(d3.format(',.0d')).height(400).width(400);
+
+      d3.select("#chart svg")
+        .datum({{ data|safe }})
+        .transition().duration(1200)
+        .call(chart);
+
+      return chart;
+    });
+</script>
+<script type="text/javascript">
+    nv.addGraph(function() {
+      var chart = nv.models.multiBarHorizontalChart()
+      .x(function(d) { return d.label })
+      .y(function(d) { return d.value })
+      .margin({top: 30, right: 20, bottom: 50, left: 175})
+      .showValues(true)
+      .showControls(true);
+
+      chart.yAxis
+      .tickFormat(d3.format(',.0d'));
+
+      d3.select('#bar-chart svg')
+      .datum({{ user_data|safe }})
+      .transition().duration(500)
+      .call(chart);
+
+      nv.utils.windowResize(chart.update);
+
+      return chart;
+    });
+</script>
+{% endblock %}
