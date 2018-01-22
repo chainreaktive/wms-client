@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 import requests
-from .local_settings import MOCA_URL, WH_ID
+from .settings import MOCA_URL, WH_ID
 from mocanexion import *
 
 class MocaBackend(object):
