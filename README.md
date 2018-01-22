@@ -5,7 +5,8 @@ WMS Web Client Template
 **Create a Web Interface to a MOCA application server with Django!**
 
 
-Introduction
+
+**Introduction**
 ____________
 
 This template is an example of creating a web interface that connects to a MOCA application server.  The login functionality
@@ -15,7 +16,8 @@ screens that can run MOCA commands and retrieve the results back.
 The Home page has a few examples of custom dashboard widgets as a reference for your own custom web project.
 
 
-Setup
+
+**Setup**
 ____________
 
 Assuming you already have a working knowledge of Django project setup, do the following to get this example up and running:
