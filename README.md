@@ -44,7 +44,7 @@ Assuming you already have a working knowledge of Django project setup, do the fo
 
   MOCA_URL = '<your MOCA URL address goes here'
 
-  WH_ID = '<your warehouse id to login goes here>'
+  WH_ID = '<your warehouse id for login goes here>'
 
   STATIC_URL = '/static/'
 
