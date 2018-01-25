@@ -42,9 +42,9 @@ Assuming you already have a working knowledge of Django project setup, do the fo
 
   SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
-  MOCA_URL = '<your MOCA URL address goes here'
+  MOCA_URL = 'your MOCA URL address goes here'
 
-  WH_ID = '<your warehouse id for login goes here>'
+  WH_ID = 'your warehouse id for login goes here'
 
   STATIC_URL = '/static/'
 
